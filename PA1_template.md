@@ -1,15 +1,11 @@
----
-title: "Reproducible Research PA 1"
-output: 
-  html_document: 
-    keep_md: yes
----
+# Reproducible Research PA 1
 
 ## Loading and Preprocessing the Data
 
 Set woring directory, load the data and transform the date variable
 
-```{r,echo=TRUE}
+
+```r
 setwd("~/Documents/RR Project 1/")
 URL <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 download.file(URL, destfile = "~/Documents/RR Project 1/CourseProject1.zip")
@@ -21,7 +17,8 @@ RR$date <- as.Date(RR$date)
 ## What is mean total number of steps taken per day?
 
 Calculate total number of steps taken each day and make a histogram
-```{r, echo=TRUE}
+
+```r
 library(ggplot2)
 RR1 <- complete.cases(RR)
 RR2 <- RR[RR1,]
@@ -31,19 +28,33 @@ names(stepsperday)[2] <- "Steps"
 ggplot(stepsperday,aes(x=Steps)) +
   geom_histogram(binwidth = 2000,fill="red",col="black") +
   labs(title="Histogram of Total Steps Taken Per Day",y="Frequency")
-
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
 Mean and Median of total number of steps taken each day
-```{r,echo=TRUE}
+
+```r
 mean(stepsperday$Steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 median(stepsperday$Steps)
+```
+
+```
+## [1] 10765
 ```
 
 ## What is the average daily activity pattern?
 
 Time series plot of 5 minute intervals and the average numer of steps taken
-```{r, echo=TRUE}
+
+```r
 avgstep <- aggregate(RR2$steps,by=list(RR2$interval),FUN=mean)
 names(avgstep)[1] <- "Interval"
 names(avgstep)[2] <- "Steps"
@@ -51,31 +62,45 @@ names(avgstep)[2] <- "Steps"
 plot(avgstep$Interval,avgstep$Steps,type = "l",xlab="Intervals",ylab="Average Steps Taken",main="Average Steps Taken Per Interval")
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
 Maximum number of steps taken on average among the 5 minute intervals
-```{r,echo=TRUE}
+
+```r
 avgstep[which.max(avgstep$Steps),1]
+```
+
+```
+## [1] 835
 ```
 
 ## Imputing missing values
 Calculate total number of NA rows
-```{r,echo=TRUE}
+
+```r
 RR2 <- RR[!RR1,]
 nrow(RR2)
 ```
+
+```
+## [1] 2304
+```
 Strategy for filling in NA values. I used the mean for each interval.
-```{r,echo=TRUE}
+
+```r
 for (i in 1:2304) {
   RR2[i,1] <- avgstep[avgstep$Interval==RR2[i,3],2]
 }
-
 ```
 Create new dataset with NA filled in
-```{r,echo=TRUE}
+
+```r
 RR3 <- RR[RR1,]
 RR4 <- rbind(RR3,RR2)
 ```
 Histogram of the total number of steps taken each day with NA filled in
-```{r,echo=TRUE}
+
+```r
 stepseachday <- aggregate(RR4$steps,by=list(RR4$date),FUN=sum)
 colnames(stepseachday) <- c("Date","Steps")
 ggplot(stepseachday,aes(x=Steps)) +
@@ -83,15 +108,30 @@ ggplot(stepseachday,aes(x=Steps)) +
   labs(title="New Total Number of Steps Taken Each Day",y="Frequency")
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
 Mean and Median on the new dataset. They are the same this time, though mean is the same as the previous one.
-```{r,echo=TRUE}
+
+```r
 mean(stepseachday$Steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 median(stepseachday$Steps)
+```
+
+```
+## [1] 10766.19
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends
 Create a new factor called Week indicating whether it is weekday or weekend and make a panel plot
-```{r,echo=TRUE}
+
+```r
 RR4$Week <- NA
 for (i in 1:17568) {
   RR4[i,4] <- ifelse(weekdays(RR4[i,2]) =="Saturday"|weekdays(RR4[i,2])=="Sunday","weekend","weekday")
@@ -108,5 +148,6 @@ colnames(RR42) <- c("Interval","Steps")
 par(mfrow=c(2,1))
 plot(RR41$Interval,RR41$Steps,type="l",main = "Weekday Average Steps Taken Per Interval",xlab="Interval",ylab = "Steps")
 plot(RR42$Interval,RR42$Steps,type="l",main = "Weekend Average Steps Taken Per Interval",xlab = "Interval",ylab = "Steps")
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
