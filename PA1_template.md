@@ -30,7 +30,7 @@ ggplot(stepsperday,aes(x=Steps)) +
   labs(title="Histogram of Total Steps Taken Per Day",y="Frequency")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+![](https://github.com/zekaih/RepData_PeerAssessment1/blob/master/figure/plot2.png)<!-- -->
 
 Mean and Median of total number of steps taken each day
 
@@ -62,7 +62,7 @@ names(avgstep)[2] <- "Steps"
 plot(avgstep$Interval,avgstep$Steps,type = "l",xlab="Intervals",ylab="Average Steps Taken",main="Average Steps Taken Per Interval")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](https://github.com/zekaih/RepData_PeerAssessment1/blob/master/figure/plot3.png)<!-- -->
 
 Maximum number of steps taken on average among the 5 minute intervals
 
@@ -108,7 +108,7 @@ ggplot(stepseachday,aes(x=Steps)) +
   labs(title="New Total Number of Steps Taken Each Day",y="Frequency")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](https://github.com/zekaih/RepData_PeerAssessment1/blob/master/figure/plot4.png)<!-- -->
 
 Mean and Median on the new dataset. They are the same this time, though mean is the same as the previous one.
 
@@ -150,4 +150,4 @@ plot(RR41$Interval,RR41$Steps,type="l",main = "Weekday Average Steps Taken Per I
 plot(RR42$Interval,RR42$Steps,type="l",main = "Weekend Average Steps Taken Per Interval",xlab = "Interval",ylab = "Steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![](https://github.com/zekaih/RepData_PeerAssessment1/blob/master/figure/plot5.png)<!-- -->
