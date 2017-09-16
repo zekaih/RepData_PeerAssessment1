@@ -1,16 +1,12 @@
-# Reproducible Research PA 1
+
 
 ## Loading and Preprocessing the Data
 
-Set woring directory, load the data and transform the date variable
+Assume the file downloaded in the working directory and unzipped, load the data and transform the date variable
 
 
 ```r
-setwd("~/Documents/RR Project 1/")
-URL <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
-download.file(URL, destfile = "~/Documents/RR Project 1/CourseProject1.zip")
-unzip("~/Documents/RR Project 1/CourseProject1.zip",exdir = "~/Documents/RR Project 1")
-RR <- read.csv("~/Documents/RR Project 1/activity.csv",header = TRUE)
+RR <- read.csv("activity.csv",header = TRUE)
 RR$date <- as.Date(RR$date)
 ```
 
